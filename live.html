@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" >
+    <meta name="keywords" content="手播课,手播,shouboke">
+    <meta name="description" content="手播课是有史以来第一款完全基于移动设备的知识分享视频直播工具，能精准传递知识文档、直播视频图像、及时互动沟通，这所有的操作不再局限于时间和地点，完全通过智能手机就可以完成。">
+    <title>手播课</title>
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="assets/js/jquery-3.0.0.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/browserMqtt.js"></script>
+    <!--<script src="assets/js/mqttws31.js"></script>-->
+    <script src="assets/js/jquery.extend.js"></script>
+    <script src="assets/js/public.js"></script>
+    <script src="assets/js/common.js"></script>
+
+    <!--flowplayer视频播放插件-->
+    <script src="assets/flowplayer/flowplayer.js"></script>
+    <!--flowplayer CSS相关-->
+    <link rel="stylesheet" type="text/css" href="assets/flowplayer/skin/functional.css">
+</head>
+<body>
+<header class="clearfix">
+    <div class="container">
+        <div>
+            <img src="assets/img/logo.png">
+        </div>
+        <ul class="clearfix">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="hot.html">热门</a></li>
+            <li><a href="preview.html">预告</a></li>
+            <li><a href="myShouboke.html">我的手播课</a></li>
+            <li><a href="customerPages/customerLogin.html">经销商入口</a></li>
+            <div class="login">
+                <a id="login" href="#" data-toggle="modal" data-target="#myModal"></a>
+            </div>
+            <div class="login_success">
+                <img id="user_headPic" src="assets/img/user_origin.png" alt="" />
+                <div class="personal">
+                    <p id="log_out">退出登录</p>
+                </div>
+            </div>
+        </ul>
+    </div>
+</header>
+
+<div id="login_success" class="container">
+    <div class="list_hot clearfix" style="padding-bottom: 10px">
+        <div class="list_hot_item list_hot_hd">
+            <h3>铼看手播课分享---<span id="teacherName"></span>老师正在讲课</h3>
+        </div>
+        <div class="list_hot_item play_area flLeft">
+            <div id="video" style="width: 728px;height:410px">
+            </div>
+            <div class="list_hot_tip">
+                <span>手播课</span>
+            </div>
+            <div class="userNum">
+                <img src="assets/img/user.png">
+                <span id="userNum">0</span>
+            </div>
+        </div>
+        <div class="list_hot_item list_hot_hd flLeft" style="margin-left: 20px;position: relative;">
+            <h3>评论</h3>
+            <span class="commentNum">0</span>
+            <div id="commentArea" class="commentArea">
+
+            </div>
+            <div class="comment clearfix">
+                <span class="question forbidden">问</span>
+                <input id="comment" type="text" value="" />
+                <button id="sendMsg">发送</button>
+            </div>
+        </div>
+    </div>
+    <div class="list_hot" style="padding-top: 0">
+        <div class="list_hot_item list_hot_hd">
+            <h3>TA的精彩回放</h3>
+        </div>
+        <div class="list_hot_bd clearfix">
+            <!--<a class="list_box_per">-->
+                <!--<div class="list_pic2">-->
+                    <!--<img src="assets/img/user.jpg" alt="" class="">-->
+                <!--</div>-->
+                <!--<div class="list_intro_pre">-->
+                    <!--<p>钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的</p>-->
+                    <!--<p>结束时间: <span>2016-10-25 10:25</span></p>-->
+                <!--</div>-->
+            <!--</a>-->
+        </div>
+    </div>
+</div>
+
+<div id="no_login" class="container">
+    <img src="assets/img/no_login.png" alt="img" />
+</div>
+
+<footer class="clearfix">
+    <div>
+        <ul class="clearfix">
+            <li><a href="#">隐私政策</a></li>
+            <li><a href="#">服务条款</a></li>
+            <li><a class="special" href="aboutUs.html">联系我们</a></li>
+        </ul>
+        <p>成都铼看科技有限公司</p>
+        <p>成都铼看科技有限公司版权所有&copy;2016蜀ICP备15008658号-2</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-1 clearfix">
+                    <div>
+                        <h3>欢迎回来</h3>
+                    </div>
+                    <form>
+                        <fieldset>
+                            <div class="login_item">
+                                <input id="user" type="text" name="user" placeholder="请输入用户名/手机号" />
+                            </div>
+                            <div class="login_item">
+                                <input id="pass" type="password" name="pass" placeholder="请输入密码" />
+                            </div>
+                            <div class="login_item">
+                                <span id="login_btn" class="login_btn">登录</span>
+                            </div>
+                            <div class="login_item">
+                                <span class="error_tip"></span>
+                                <span class="forget_pass"><a href="#">忘记密码?</a></span>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-body-2">
+                    <h3>第三方登录</h3>
+                    <div class="wb_login_btn"><img src="assets/img/icon_weibo.png"/>新浪微博登录</div>
+                    <div><img src="assets/img/icon_weixin.png"/>微信账号登录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+
+        var _this={};
+        var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(userInfo);
+        if(userInfo == null){
+            $("#login_success").hide();
+            $("#no_login").show();
+        }else{
+            $(".list_hot").show();
+            $(".list_hot_item").show();
+            $("#login_success").show();
+            $("#no_login").hide();
+        }
+
+        //获取url里的streamId
+        var url = window.location.href;
+        var streamId = url.substring(url.lastIndexOf('=')+1, url.length);
+
+        //get history comments
+        $.ajax({
+            url:$.serverHttp+'/stream/question',
+            type:"get",
+            data:{
+                type:"all",
+                streamId:streamId,
+                page: "1",
+                resultsPerPage:"40",
+                order:"desc"  //降序
+            },
+            success:function(data){
+                console.log("getCommentSuccess",data);
+                var commentList = "";
+                var length = data.items.length;
+                _this.length = length;
+                if(length>0){
+//                    $("#saySomething").css("display","none");
+                    $(".commentNum").html(_this.length);
+                }
+                for(var i=length-1;i>=0;i--){ //倒序显示
+                    if(data.items[i].type == "message"){
+                        commentList+='<div>'+
+                                '<img src="'+data.items[i].user.avatarUrl+'" alt="headPic" />'+
+                                '<span class="user"><span>'+data.items[i].user.displayName+'</span>: </span>'+
+                                '<span>'+data.items[i].content+'</span>'+
+                                '</div>';
+                    }else{
+                        commentList+='<div>'+
+                                '<img src="'+data.items[i].user.avatarUrl+'" alt="headPic" />'+
+                                '<span class="user"><span>'+data.items[i].user.displayName+'</span><span style="color: #005AA0">问: </span></span>'+
+                                '<span style="color: #005AA0;font-size: large;">'+data.items[i].content+'</span>'+
+                                '</div>';
+                    }
+                }
+                $("#commentArea").append(commentList);
+            },
+            error:function(error){
+                console.log("getCommentError",error);
+            }
+        });
+
+        //视频引入
+        loadVideo(streamId);
+
+        //直播视频播放
+        function loadVideo(streamId) {
+            $.ajax({
+            url: $.serverHttp+'/stream/show',
+                data: {
+                    streamId : streamId,
+                    type:'join'
+                },
+                headers:{
+                    Authorization: "Bearer "+userInfo.token.token
+                },
+                type: "get",
+                success: function (data){
+                    console.log("loadSingalVedioSuccessData",data);
+                    console.log("userId",data.user.id);
+                    $("#teacherName").html(data.user.displayName);
+                    perHotVideoList(data.user.id);
+                    var streamObj = data.streamUrls;
+                    //接收消息
+                    connectMsg(data.chatChannel);
+                    console.log("data.chatChannel",data.chatChannel);
+                    if(data.status=="over"){
+                        $(streamObj).each(function(i,n){
+                            if(n.type=="HLS"){//over
+                                _this.player.load({
+                                    sources: [
+//                                    { type: 'application/x-mpegurl', src: n.url }
+                                        { type: 'application/x-mpegurl', src: data.streamUrl }
+                                    ]
+                                });
+                            }
+                        });
+                    }else if(data.status=="live"){
+                        $(streamObj).each(function(i,n){
+                            if(n.type=="RTMP"){//live pc端优先播放rtmp
+                                _this.player.load({
+                                    sources: [
+                                        { type: 'video/flash', src: n.url }
+                                    ]
+                                });
+                            }
+                        });
+                    }else{
+                        alert("直播还没有开始呢");
+                    }
+                    $("#videoBox").css("display", "block");
+                },
+                error: function (err) {
+//                    console.log("loadSingalVedioErrData",err);
+                }
+            });
+
+        }
+
+        //发送消息
+        $("#sendMsg").click(function () {
+            var comment = $("#comment").val();
+            sendInfo(comment,streamId);
+            $("#comment").val("");
+        });
+        $("#comment").keydown(function (e) {
+            if(e.keyCode==13){  //按enter触发login事件
+                // 处理事件
+                var comment = $("#comment").val();
+                sendInfo(comment,streamId);
+                $("#comment").val("");
+            }
+        });
+
+        //发送消息
+//        function  sendInfo(msg,streamId){
+//            if(msg == ''){
+//                alert("内容不能为空,请输入内容再发送。")
+//            }else{
+//                $.ajax({
+//                    url: $.serverHttp+'/msg/push',
+//                    data:{
+//                        streamId: streamId,
+//                        content: msg,
+//                        type: "message"
+//                    },
+//                    headers:{
+//                        Authorization: "Bearer "+userInfo.token.token
+//                    },
+//                    type:"post",
+//                    success:function(data){
+//                        console.log("sendInfoSuccessData",data);
+//                    },
+//                    error:function(error){
+//                        console.log("sendInfoError",error)
+//                        alert("发送失败,请重试。");
+//                    }
+//                });
+//            }
+//        }
+
+        function  sendInfo(msg,streamId){
+            if(msg == ''){
+                alert("内容不能为空,请输入内容再发送。")
+            }else{
+                if($(".question").hasClass("forbidden")){
+                    $.ajax({
+                        url: $.serverHttp+'/msg/push',
+                        data:{
+                            streamId: streamId,
+                            content: msg,
+                            type: "message"
+                        },
+                        headers:{
+                            Authorization: "Bearer "+userInfo.token.token
+                        },
+                        type:"post",
+                        success:function(data){
+                            console.log("sendInfoSuccessData",data);
+                        },
+                        error:function(error){
+                            console.log("sendInfoError",error)
+                            alert("发送失败,请重试。");
+                        }
+
+                    });
+                }else{
+                    $.ajax({
+                        url: $.serverHttp+'/msg/push',
+                        data:{
+                            streamId: streamId,
+                            content: msg,
+                            type: "question"
+                        },
+                        headers:{
+                            Authorization: "Bearer "+userInfo.token.token
+                        },
+                        type:"post",
+                        success:function(data){
+                            console.log("sendInfoSuccessData",data);
+                        },
+                        error:function(error){
+                            console.log("sendInfoError",error);
+                            alert("发送失败,请重试。");
+                        }
+
+                    });
+                }
+            }
+        }
+
+        _this.player = flowplayer($("#video"), {
+            splash: true,
+            ratio:0.4167,
+            autoplay:true,
+            autoBuffering: true, //自动缓冲
+            adaptiveRatio: true,
+            swf: 'http://handsclass.oss-cn-shenzhen.aliyuncs.com/assets/flowplayer/flowplayer.swf',
+            swfHls: 'http://handsclass.oss-cn-shenzhen.aliyuncs.com/assets/flowplayer/flowplayerhls.swf',
+            clip: {
+                sources: [
+                    { type:"",
+                        src:"" }
+                ]
+            }
+        });
+
+        /*接收消息*/
+        function connectMsg(chatChannel){
+//        console.log("connectMsgStreamId",streamId);
+            //游客进入  随机时间戳＋随机字母————>clientId，username  token————>password
+            var timestamp = (new Date()).valueOf()+Math.random().toString(36).replace(/[^a-z]+/g, '');
+            var client = mqtt.connect('ws://mqtt.lycam.tv:8083/mqtt',{  //MQTT连接的服务器,开发环境是这个,如果是生产环境就是ws://mqtt.lycam.tv:8083/mqtt
+                keepalive:30,
+                clientId:timestamp,
+                username:timestamp,
+                password:'Fy4DmNTjx0iBfupchGpnnYNXGCButweX261vlPLn711b0hFZVQST1whewbutveKU'
+            });
+
+            client.on("connect",function(connack){
+                console.log("connect...");
+            });
+            client.on("reconnect",function(){
+                console.log("reconnect...");
+            });
+            client.on("close",function(){
+                console.log("close...");
+            });
+            client.on("error",function(error){
+                console.log(error);
+            });
+            client.on("offline",function(){
+                console.log("offline...");
+            });
+
+            client.subscribe(chatChannel,function (error,data) {
+//                console.log("error",error);
+//                console.log("data",data);
+            });
+
+
+            client.on('message', function (topic, msg) {
+                console.log("topic",topic);
+                _this.topic = topic;
+                var msg = JSON.parse(msg);
+                console.log("msg",msg);
+                var opt="";
+                switch(msg.type){
+                    case  "message":
+                        _this.length++;
+                        opt+='<div>'+
+                                '<img src="'+msg.metaInfo.avatarUrl+'" alt="headPic" />'+
+                                '<span class="user"><span>'+msg.metaInfo.displayName+'</span>: </span>'+
+                                '<span>'+msg.metaInfo.content+'</span>'+
+                                '</div>';
+                        $("#commentArea").append(opt);
+                        $("#commentArea").scrollTop($("#commentArea")[0].scrollHeight);
+                        break;
+                    case "question":
+                        _this.length++;
+                        opt+='<div>'+
+                                '<img src="'+msg.metaInfo.avatarUrl+'" alt="headPic" />'+
+                                '<span class="user"><span>'+msg.metaInfo.displayName+'</span><span style="color: #005AA0;">问</span>: </span>'+
+                                '<span style="color: #005AA0;font-size: large;">'+msg.metaInfo.content+'</span>'+
+                                '</div>';
+                        $("#commentArea").append(opt);
+                        $("#commentArea").scrollTop($("#commentArea")[0].scrollHeight);
+                        break;
+                    case "audience_num":
+                        var audienceNum = msg.metaInfo.count;
+                            $("#userNum").html(audienceNum);
+                        break;
+                }
+                $(".commentNum").html(_this.length);
+//            if( $("#commentArea").has("div").length > 0){
+//                goMsgBottom();  //回到底部
+//                $("#saySomething").css("display","none");
+//            }
+            });
+        }
+
+        /* MQTT connect start*/
+//        function connectMsg(chatChannel){
+//
+//            var timestamp = (new Date()).valueOf()+Math.random().toString(36).replace(/[^a-z]+/g, '');
+//            // Create a client instance
+//            var client = new Paho.MQTT.Client("mqtt.lycam.tv", Number(8083), "/mqtt", timestamp);  //生产环境MQTT地址
+//            // set callback handlers
+//            client.onConnectionLost = onConnectionLost;
+//            client.onMessageArrived = onMessageArrived;
+//            // connect the client
+//            client.connect({
+//                onSuccess:onConnect,
+//                userName : timestamp,
+//                password :  'Fy4DmNTjx0iBfupchGpnnYNXGCButweX261vlPLn711b0hFZVQST1whewbutveKU'
+//            });
+//            //called when the client connects
+//            function onConnect() {
+//                // Once a connection has been made, make a subscription and send a message.
+//                console.log("onConnect:连接成功");
+//                client.subscribe(chatChannel);
+//            }
+//            // called when the client loses its connection
+//            function onConnectionLost(responseObject) {
+//                console.log("onConnect:连接失败");
+//                console.log("responseObject",responseObject);
+//                if (responseObject.errorCode !== 0) {
+//                    console.log("onConnectionLost:"+responseObject.errorMessage);
+//                }
+//            }
+//            // called when a message arrives
+//            function onMessageArrived(message) {
+//                var data =  JSON.parse(message.payloadString);
+//                console.log("data",data);
+//                var opt='';
+//                switch(data.type)
+//                {
+//                    case  "message":
+//                        opt+='<div>'+
+//                                '<img src="'+data.metaInfo.avatarUrl+'" alt="headPic" />'+
+//                                '<span class="user"><span>'+data.metaInfo.displayName+'</span>: </span>'+
+//                                '<span>'+data.metaInfo.content+'</span>'+
+//                                '</div>';
+//                        break;
+//                    case "question":
+//                        opt+='<div>'+
+//                                '<img src="'+data.metaInfo.avatarUrl+'" alt="headPic" />'+
+//                                '<span class="user"><span>'+data.metaInfo.displayName+'</span>: </span>'+
+//                                '<span>'+data.metaInfo.content+'</span>'+
+//                                '</div>';
+//                        break;
+//                    case "audience_num":
+//                        var audienceNum = data.metaInfo.count;
+//                        break;
+//                }
+////                console.log("opt",opt);
+//                $("#commentArea").append(opt);
+//            }
+//        }
+        /* MQTT connect end*/
+
+        function perHotVideoList(userId){
+            $.ajax({
+                url: $.serverHttp+'/user/streams',
+                data:{
+                    status: "over",
+                    userid:userId,
+                    page:1,
+                    resultsPerPage:8
+                },
+                headers:{
+                    Authorization: "Bearer "+userInfo.token.token
+                },
+                type:"get",
+                success:function(data){
+                    console.log("perHotVideoListSuccess",data);
+                    var length = data.items.length;
+                    var hotVideoList = '';
+                    for(var i=0;i<length;i++){
+                        hotVideoList += '<a href="live.html?streamId='+data.items[i].streamId+'" class="list_box_per">'+
+                                '<div class="list_pic2">'+
+                                '<img src="'+data.items[i].thumbnailUrl+'" alt="" class="">'+
+                                '</div>'+
+                                '<div class="list_intro_pre">'+
+                                '<p>'+data.items[i].description+'</p>'+
+                                '<p>结束时间: <span>'+formatDate(data.items[i].timeFinished,'yyyy-MM-dd HH:mm')+'</span></p>'+
+                                '</div>'+
+                                '</a>'
+                    }
+                    $(".list_hot_bd").html(hotVideoList);
+
+                },
+                error:function(error){
+                    console.log("perHotVideoListError",error);
+                }
+            })
+        }
+
+    });
+
+    // 提问按钮切换
+    $(".question").on("click",function () {
+        $(".question").toggleClass("forbidden");
+    });
+
+
+    //消息自动滚到底部
+//    function goMsgBottom(){
+//        var messageBox = $('#messageBox');
+//        var msg = $('ul#msg li:last-child');
+//        messageBox.scrollTop(
+//                msg.offset().top-messageBox.offset().top+messageBox.scrollTop()
+//        );
+//    }
+
+</script>
+</body>
+</html>

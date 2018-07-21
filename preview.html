@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" >
+    <meta name="keywords" content="手播课,手播,shouboke">
+    <meta name="description" content="手播课是有史以来第一款完全基于移动设备的知识分享视频直播工具，能精准传递知识文档、直播视频图像、及时互动沟通，这所有的操作不再局限于时间和地点，完全通过智能手机就可以完成。">
+    <title>手播课</title>
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="assets/js/jquery-3.0.0.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.extend.js"></script>
+    <script src="assets/js/common.js"></script>
+</head>
+<body>
+<header class="clearfix">
+    <div class="container">
+        <div>
+            <img src="assets/img/logo.png">
+        </div>
+        <ul class="clearfix">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="hot.html">热门</a></li>
+            <li><a class="active" href="preview.html">预告</a></li>
+            <li><a href="myShouboke.html">我的手播课</a></li>
+            <li><a href="customerPages/customerLogin.html">经销商入口</a></li>
+            <div class="login">
+                <a id="login" href="#" data-toggle="modal" data-target="#myModal"></a>
+            </div>
+            <div class="login_success">
+                <img id="user_headPic" src="assets/img/user_origin.png" alt="" />
+                <div class="personal">
+                    <p id="log_out">退出登录</p>
+                </div>
+            </div>
+        </ul>
+    </div>
+</header>
+
+<div id="login_success" class="container">
+    <div class="list_hot">
+        <div class="list_hot_item list_hot_hd">
+            <h3>热门预告</h3>
+        </div>
+        <div id="search">
+            <input id="searchContent" placeholder="请输入课程名进行搜索..." type="text" name="search" value="">
+            <input class="button" id="submitSearch" type="submit" value="查 找">
+        </div>
+        <div id="preList" class="list_hot_bd clearfix">
+
+        </div>
+        <div id="noMore">
+            <img src="assets/img/null.png" alt="img" />
+        </div>
+        <div class="list_load_more"><span id="loadMore">加载更多</span></div>
+        <div id="no_more" class="list_load_more">
+            <p style="font-size: 16px">哦豁,没有啦。。。</p>
+        </div>
+    </div>
+</div>
+
+<div id="no_login" class="container">
+    <img src="assets/img/no_login.png" alt="img" />
+</div>
+
+<footer class="clearfix">
+    <div>
+        <ul class="clearfix">
+            <li><a href="#">隐私政策</a></li>
+            <li><a href="#">服务条款</a></li>
+            <li><a class="special" href="aboutUs.html">联系我们</a></li>
+        </ul>
+        <p>成都铼看科技有限公司</p>
+        <p>成都铼看科技有限公司版权所有&copy;2016蜀ICP备15008658号-2</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-1 clearfix">
+                    <div>
+                        <h3>欢迎回来</h3>
+                    </div>
+                    <form>
+                        <fieldset>
+                            <div class="login_item">
+                                <input id="user" type="text" name="user" placeholder="请输入用户名/手机号" />
+                            </div>
+                            <div class="login_item">
+                                <input id="pass" type="password" name="pass" placeholder="请输入密码" />
+                            </div>
+                            <div class="login_item">
+                                <span id="login_btn" class="login_btn">登录</span>
+                            </div>
+                            <div class="login_item">
+                                <span class="error_tip"></span>
+                                <span class="forget_pass"><a href="#">忘记密码?</a></span>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-body-2">
+                    <h3>第三方登录</h3>
+                    <div class="wb_login_btn"><img src="assets/img/icon_weibo.png"/>新浪微博登录</div>
+                    <div><img src="assets/img/icon_weixin.png"/>微信账号登录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+
+        var _this={};
+
+        _this.totalItems = 0;  //定义一个全局的totalItems,用于点击加载更多时,以分页形式向后台请求数据
+
+        $(".list_hot").show();
+        $("#login_success").show();
+        $("#no_login").hide();
+        //load more
+        var loading = {
+            init:function (searchContent) {
+                $.ajax({
+                    url: $.serverHttp+'/stream/popular',
+                    type:"get",
+                    data:{
+                        status:"ready",
+                        page:1,
+                        length:9,
+                        keyword:searchContent
+                    },
+                    success:function (data) {
+                        console.log("getPreInitListData",data);
+                        console.log("totalItems",data.totalItems);
+                        $(".list_hot_item").show();
+                        $("#search").show();
+                        $("#login_success").show();
+                        if(data.data.length == 0){
+                            $("#noMore").show();
+                            $("#loadMore").hide();
+                        }else if(data.data.length!=0 && data.data.length>=9){
+                            $("#loadMore").css("display","inline-block");
+                            $("#noMore").hide();
+                        }else{
+                            $("#loadMore").hide();
+                            $("#noMore").hide();
+                        }
+                        _this.totalItems = data.data.length;  //初始化,获取一共有多少条数据
+                        _this.page = Math.ceil(_this.totalItems/9);  //每一页9条数据,计算一共有多少页
+                        _this.initPage = (_this.page-(_this.page-1))+1;  //第一次点击loadMore,加载第2页
+                        _this.currentPage = _this.initPage; //当前加载页,存为全局变量,便于修改以及用于请求,第一次点击是加载第2页。
+                        var previewList = '';
+                        var length = data.data.length;
+                        for(var i = 0; i<length;i++){
+                            previewList += '<div class="list_box">'+
+                                    '<div class="list_pic2">'+
+                                    '<a href="previewDetail.html?streamId='+data.data[i].streamId+'">' +
+                                    '<img src="'+data.data[i].thumbnailUrl+'" alt="" class="">'+
+                                    '</a>'+
+                                    '<span class="tag">预告</span>'+
+                                    '</div>'+
+                                    '<div class="list_intro">'+
+                                    '<p>'+data.data[i].title+'</p>'+
+                                    '<p>'+data.data[i].user.displayName+'</p>'+
+                                    '</div>'+
+                                    '</div>'
+                        }
+                        $("#preList").html(previewList);
+                        //  视频展示区域样式切换
+                        $(".list_hot_bd .list_box .list_pic2").each(function (index,i) {
+                            $(this).mouseenter(function () {
+                                $(".list_hot_bd .list_box .list_pic2 img").eq(index).addClass("hover_scale");
+                            });
+                            $(this).mouseleave(function () {
+                                $(".list_hot_bd .list_box .list_pic2 img").eq(index).removeClass("hover_scale");
+                            })
+                        });
+                    },
+                    error:function (error) {
+                        console.log(error);
+                    }
+                });
+            },
+            loadMore:function (searchContent) {
+                console.log("_this.currentPage",_this.currentPage);
+                $.ajax({
+                    url: $.serverHttp+'/stream/popular',
+                    type:"get",
+                    data:{
+                        status:"ready",
+                        page:_this.currentPage,
+                        length:9,
+                        keyword:searchContent
+                    },
+                    success:function (data) {
+                        $("#loadMore").css("display","inline-block");
+                        $(".list_hot_item").show();
+                        console.log("getPrePageListData",data);
+                        if(data.data.length == 0){
+                            $("#loadMore").hide();
+                            $("#no_more").show();
+                        }
+                        _this.totalItems -= 9; //每加载一次,数量减去一页的数量
+                        _this.currentPage += 1; //加载完成以后_this.currentPage++
+                        var previewList = '';
+                        var length = data.data.length;
+                        for(var i = 0; i<length;i++){
+                            previewList += '<div class="list_box">'+
+                                    '<div class="list_pic2">'+
+                                    '<a href="previewDetail.html?streamId='+data.data[i].streamId+'">' +
+                                    '<img src="'+data.data[i].thumbnailUrl+'" alt="" class="">'+
+                                    '</a>'+
+                                    '<span class="tag">预告</span>'+
+                                    '</div>'+
+                                    '<div class="list_intro">'+
+                                    '<p>'+data.data[i].title+'</p>'+
+                                    '<p>'+data.data[i].user.displayName+'</p>'+
+                                    '</div>'+
+                                    '</div>'
+                        }
+                        $("#preList").append(previewList);
+                        //  视频展示区域样式切换
+                        $(".list_hot_bd .list_box .list_pic2").each(function (index,i) {
+                            $(this).mouseenter(function () {
+                                $(".list_hot_bd .list_box .list_pic2 img").eq(index).addClass("hover_scale");
+                            });
+                            $(this).mouseleave(function () {
+                                $(".list_hot_bd .list_box .list_pic2 img").eq(index).removeClass("hover_scale");
+                            })
+                        });
+                    },
+                    error:function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        };
+        loading.init();
+        $("#loadMore").click(function () {
+            var searchContent = $("#searchContent").val();
+            loading.loadMore(searchContent);
+        });
+
+        $("#submitSearch").click(function () {
+            var searchContent = $("#searchContent").val();
+            loading.init(searchContent);
+        });
+        $('#searchContent').keydown(function(e){
+            var searchContent = $("#searchContent").val();
+            if(e && e.keyCode == 13){  //按enter触发login事件
+                // 处理事件
+                loading.init(searchContent);
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

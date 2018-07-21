@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" >
+    <meta name="keywords" content="手播课,手播,shouboke">
+    <meta name="description" content="手播课是有史以来第一款完全基于移动设备的知识分享视频直播工具，能精准传递知识文档、直播视频图像、及时互动沟通，这所有的操作不再局限于时间和地点，完全通过智能手机就可以完成。">
+    <title>手播课</title>
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="assets/js/jquery-3.0.0.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/browserMqtt.js"></script>
+    <script src="assets/js/jquery.extend.js"></script>
+    <script src="assets/js/common.js"></script>
+
+    <!--flowplayer视频播放插件-->
+    <script src="assets/flowplayer/flowplayer.js"></script>
+    <!--flowplayer CSS相关-->
+    <link rel="stylesheet" type="text/css" href="assets/flowplayer/skin/functional.css">
+</head>
+<body>
+<header class="clearfix">
+    <div class="container">
+        <div>
+            <img src="assets/img/logo.png">
+        </div>
+        <ul class="clearfix">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="hot.html">热门</a></li>
+            <li><a href="preview.html">预告</a></li>
+            <li><a href="myShouboke.html">我的手播课</a></li>
+            <li><a href="customerPages/customerLogin.html">经销商入口</a></li>
+            <div class="login">
+                <a id="login" href="#" data-toggle="modal" data-target="#myModal"></a>
+            </div>
+            <div class="login_success">
+                <img id="user_headPic" src="assets/img/user_origin.png" alt="" />
+                <div class="personal">
+                    <p id="log_out">退出登录</p>
+                </div>
+            </div>
+        </ul>
+    </div>
+</header>
+
+<div id="login_success" class="container">
+    <div class="list_hot clearfix" style="padding-bottom: 10px">
+        <div class="list_hot_item list_hot_hd">
+            <h3>铼看手播课--课程预告</h3>
+        </div>
+        <div class="list_hot_item play_area flLeft">
+            <div style="width: 728px;height:410px">
+                <img id="cover" style="width: 728px;height: 410px" src="" alt=""/>
+            </div>
+            <div class="list_hot_tip">
+                <span>预告</span>
+            </div>
+        </div>
+        <div class="list_hot_item list_hot_hd flLeft" style="margin-left: 20px">
+            <h3>预告简介</h3>
+            <div class="commentArea" style="height: 383px;padding: 20px;">
+                <h5>课程名称</h5>
+                <p id="course_title"></p>
+                <h5>课程讲师</h5>
+                <p id="course_teacher"></p>
+                <h5>课程介绍:</h5>
+                <p id="course_intro"></p>
+                <h5>开课时间:</h5>
+                <p id="course_startTime"></p>
+                <h5>课程时长:</h5>
+                <p id="course_timeLong"></p>
+                <h5>所属团队:</h5>
+                <p id="course_team"></p>
+            </div>
+        </div>
+    </div>
+    <div class="list_hot" style="padding-top: 0">
+        <div class="list_hot_item list_hot_hd">
+            <h3>TA的精彩回放</h3>
+        </div>
+        <div class="list_hot_bd clearfix">
+            <div class="list_box_per">
+                <div class="list_pic2">
+                    <img src="assets/img/user.jpg" alt="" class="">
+                </div>
+                <div class="list_intro_pre">
+                    <p>钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="no_login" class="container">
+    <img src="assets/img/no_login.png" alt="img" />
+</div>
+
+<footer class="clearfix">
+    <div>
+        <ul class="clearfix">
+            <li><a href="#">隐私政策</a></li>
+            <li><a href="#">服务条款</a></li>
+            <li><a class="special" href="aboutUs.html">联系我们</a></li>
+        </ul>
+        <p>成都铼看科技有限公司</p>
+        <p>成都铼看科技有限公司版权所有&copy;2016蜀ICP备15008658号-2</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-1 clearfix">
+                    <div>
+                        <h3>欢迎回来</h3>
+                    </div>
+                    <form>
+                        <fieldset>
+                            <div class="login_item">
+                                <input id="user" type="text" name="user" placeholder="请输入用户名/手机号" />
+                            </div>
+                            <div class="login_item">
+                                <input id="pass" type="password" name="pass" placeholder="请输入密码" />
+                            </div>
+                            <div class="login_item">
+                                <span id="login_btn" class="login_btn">登录</span>
+                            </div>
+                            <div class="login_item">
+                                <span class="error_tip"></span>
+                                <span class="forget_pass"><a href="#">忘记密码?</a></span>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-body-2">
+                    <h3>第三方登录</h3>
+                    <div class="wb_login_btn"><img src="assets/img/icon_weibo.png"/>新浪微博登录</div>
+                    <div><img src="assets/img/icon_weixin.png"/>微信账号登录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        //获取缓存的用户信息
+        var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log("userInfoHot",userInfo);
+        console.log("typeofUserInfoHot",typeof(userInfo));
+        if(userInfo == null){
+            $("#login_success").hide();
+            $("#no_login").show();
+        }else{
+            $(".list_hot").show();
+            $(".list_hot_item").show();
+            $("#login_success").show();
+            $("#no_login").hide();
+        }
+
+        //获取url里的streamId
+        var url = window.location.href;
+        var streamId = url.substring(url.lastIndexOf('=')+1, url.length);
+        console.log(streamId);
+
+        //视频引入
+        loadVideoInfo(streamId);
+        function loadVideoInfo(streamId) {
+            var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            $.ajax({
+                url: $.serverHttp+'/stream/show',
+                data: {
+                    streamId : streamId,
+                    type:'join'
+                },
+                headers:{
+                    Authorization: "Bearer "+userInfo.token.token
+                },
+                type: "get",
+                success: function (data){
+                    console.log("loadSingalVideoSuccessData",data);
+                    $("#course_title").html(data.title);
+                    $("#course_teacher").html(data.user.displayName);
+                    $("#course_intro").html(data.description);
+                    $("#course_startTime").html(data.startTime);
+                    $("#course_timeLong").html(data.duration);
+                    $("#course_team").html(data.teamName);
+                    $("#cover").attr("src",data.thumbnailUrl);
+                },
+                error: function (error) {
+                    console.log("loadSingalVedioErrData",error);
+                }
+            });
+        }
+
+    });
+
+</script>
+</body>
+</html>

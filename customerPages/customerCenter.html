@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" >
+    <meta name="keywords" content="手播课,手播,shouboke">
+    <meta name="description" content="手播课是有史以来第一款完全基于移动设备的知识分享视频直播工具，能精准传递知识文档、直播视频图像、及时互动沟通，这所有的操作不再局限于时间和地点，完全通过智能手机就可以完成。">
+    <title>手播课</title>
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/DataTables/media/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../assets/DataTables/media/css/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="../assets/css/chosen.css">
+    <link rel="stylesheet" href="../assets/css/customer.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <script src="../assets/js/jquery-3.0.0.min.js"></script>
+    <script src="../assets/js/jquery.extend.js"></script>
+    <script src="../assets/js/chosen.jquery.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/DataTables/media/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/customer/jquery.zclip.min.js"></script>
+
+    <script src="../assets/js/public.js"></script>
+    <script src="../assets/js/customer/userInfoEdit.js"></script>
+    <script src="../assets/js/customer/customerCommon.js"></script>
+    <script src="../assets/js/customer/customerCenter.js"></script>
+</head>
+<body style="background-color: #f1f3f5;">
+<header class="clearfix">
+    <div class="container clearfix">
+        <div style="width: 15%;">
+            <img src="../assets/img/logo.png">
+        </div>
+        <div class="header_1">
+            <h4>经销商中心</h4>
+        </div>
+        <div class="customer_loginBox">
+            <a style="color: #fff" href="../index.html">手播课官网入口</a>
+            <img id="customer_headPic" src="../assets/img/user_origin.png" alt="" />
+            <a id="customer_logout" href="#">[&nbsp;退出&nbsp;]</a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="customerCenter_content_wrapper">
+        <div class="header clearfix">
+            <h4>个人中心首页</h4>
+            <span><img src="../assets/img/phone.png" style="width: 20px;">&nbsp;客服热线: &nbsp;028-6115-2581</span>
+        </div>
+        <div class="nav">
+            <ul class="clearfix">
+                <li id="customer_userHead" style="position: relative;border-radius: 50%;">
+                    <span class="edit" data-toggle="modal" data-target="#editPersonal">编辑</span>
+                </li>
+                <li>
+                    <div class="user">
+                        <h4 id="user_contact"></h4>
+                        <div>
+                            <span id="discount"></span>
+                            <span>&nbsp;销售折扣可联系客服进行调节</span>
+                        </div>
+                        <p>ID:&nbsp;<span id="userID"></span></p>
+                    </div>
+                </li>
+                <!--<li>-->
+                    <!--<h4>余额</h4>-->
+                    <!--<p><span id="balance">888.88</span>&nbsp;元</p>-->
+                    <!--<button id="recharge" class="btn btn-default btn_center">充值</button>-->
+                <!--</li>-->
+                <li>
+                    <h4>卡券</h4>
+                    <p><span id="count"></span>&nbsp;张</p>
+                    <a id="exchange" href="customerPurchase.html" class="btn btn-default btn_center">购买</a>
+                </li>
+            </ul>
+        </div>
+        <div style="padding: 20px 20px 0px 20px;">
+            <ul class="nav nav-tabs clearfix">
+                <li class="active"><a href="javascript:;"><img src="../assets/img/card.png" style="width: 20px">&nbsp;&nbsp;我的卡券<span id="cardCount" class="badge card"></span></a></li>
+                <li><a href="javascript:;"><img src="../assets/img/icon_buyBag.png" style="width: 20px">&nbsp;&nbsp;购买记录<span id="historyNum" class="badge card"></span></a></li>
+                <!--<div style="float: right">-->
+                    <!--<div id="search_card">-->
+                        <!--<input id="searchContent" placeholder="关键字搜索..." type="text" name="search" value="">-->
+                        <!--<input class="button" id="cardSearch" type="submit" value="查 找">-->
+                    <!--</div>-->
+                <!--</div>-->
+            </ul>
+            <div id="myCardList" class="card_wrapper">
+                <table id="myCardTable" class="table table-bordered table-striped" role="grid" aria-describedby="deleteSeller_info">
+                    <thead>
+                        <tr role="row">
+                            <th tabindex="0" rowspan="1" colspan="1" class="center">充值卡序列号</th>
+                            <th rowspan="1" colspan="1" aria-label="邮箱" class="center">面值</th>
+                            <th rowspan="1" colspan="1" aria-label="联系方式" class="center">产生日期</th>
+                            <th rowspan="1" colspan="1" aria-label="操作" class="center">有效期</th>
+                            <th rowspan="1" colspan="1" aria-label="操作" class="center">状态</th>
+                            <th rowspan="1" colspan="1" aria-label="操作" class="center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cardList" class="middle-align">
+
+                    </tbody>
+                </table>
+            </div>
+            <div id="purchaseHistory" class="card_wrapper">
+                <table id="purchaseTable" class="table table-bordered table-striped" role="grid" aria-describedby="deleteSeller_info">
+                    <thead>
+                        <tr role="row">
+                            <th tabindex="0" rowspan="1" colspan="1" class="center">订单号</th>
+                            <th rowspan="1" colspan="1" aria-label="金额" class="center">金额</th>
+                            <th rowspan="1" colspan="1" aria-label="创建日期" class="center">创建日期</th>
+                            <th rowspan="1" colspan="1" aria-label="支付方式" class="center">支付方式</th>
+                            <th rowspan="1" colspan="1" aria-label="支付状态" class="center">支付状态</th>
+                            <th rowspan="1" colspan="1" aria-label="是否开具发票" class="center">是否开具发票</th>
+                            <th rowspan="1" colspan="1" aria-label="操作" class="center">操作</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="purchaseHistoryList" class="middle-align">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="clearfix">
+    <div>
+        <ul class="clearfix">
+            <li><a href="#">隐私政策</a></li>
+            <li><a href="#">服务条款</a></li>
+            <li><a class="special" href="#">联系我们</a></li>
+        </ul>
+        <p>成都铼看科技有限公司</p>
+        <p>成都铼看科技有限公司版权所有&copy;2016蜀ICP备15008658号-2</p>
+    </div>
+</footer>
+
+<!--修改经销商信息-->
+<div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" id="editPersonal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="margin-top: 60px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">个人信息———编辑</h4>
+            </div>
+            <form role="form" style="padding: 40px;border-top: 1px solid #ddd;">
+                <div class="form-group">
+                    <label for="company"><span class="point">*</span>公司名称</label>
+                    <input type="text" class="form-control" id="company" placeholder="请输入公司名称">
+                </div>
+                <div class="form-group">
+                    <label for="select_business"><span class="point">*</span>行业类型</label><br>
+                    <select id="select_business" name="dept" style="width: 100%;" class="dept_select">
+                        <option value="0">请选择行业类型</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="username"><span class="point">*</span>联系人</label>
+                    <input type="text" class="form-control" id="username" placeholder="请输入联系人姓名">
+                </div>
+                <div class="form-group">
+                    <label for="telephone"><span class="point">*</span>联系电话</label>
+                    <input type="text" class="form-control" id="telephone" placeholder="请输入联系电话">
+                </div>
+                <div class="form-group">
+                    <label for="email"><span class="point">*</span>联系邮箱</label>
+                    <input type="email" class="form-control" id="email" placeholder="请输入联系邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="address"><span class="point">*</span>邮寄地址</label>
+                    <input type="text" class="form-control" id="address" placeholder="请输入邮寄地址">
+                </div>
+                <div class="form-group">
+                    <label for="intro">业务简介</label>
+                    <textarea id="intro" class="form-control" rows="3" placeholder="请输入业务简介"></textarea>
+                </div>
+                <button id="submitEdit" type="button" class="btn btn-default btn_register">修改</button>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--查看订单详情-->
+<div class="modal fade" id="orderDetail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" style="font-weight: 400;">订单详情</h4>
+            </div>
+            <div class="modal-body clearfix" style="border-top: 1px solid #e5e5e5;overflow: scroll;
+    height: 398px;">
+                <p>卡券数量: <span id="cardNum"></span></p>
+                <ul id="cardDetail">
+
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--索要发票-->
+<div class="modal fade" id="billModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">发票信息</h4>
+            </div>
+            <div class="modal-body" style="border-top: 1px solid #e5e5e5">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">发票类型:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" disabled value="普通发票">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">发票内容:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" disabled value="技术服务">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user_Name" class="col-sm-2 control-label">联系人:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="user_Name" placeholder="请输入联系人姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">联系电话:</label>
+                        <div class="col-sm-10">
+                            <input type="text" disabled class="form-control telephone" placeholder="请输入联系电话">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">发票抬头:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control company" placeholder="请输入发票抬头">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">邮寄地址:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control address" rows="3" placeholder="请输入邮寄地址"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="save" class="btn btn-default">保存</button>
+                <button type="button" id="sureGet" class="btn btn-primary">确定索要</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    //    var height = $(window).height();
+    //    $("body").height(height);
+</script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" >
+    <meta name="keywords" content="手播课,手播,shouboke">
+    <meta name="description" content="手播课是有史以来第一款完全基于移动设备的知识分享视频直播工具，能精准传递知识文档、直播视频图像、及时互动沟通，这所有的操作不再局限于时间和地点，完全通过智能手机就可以完成。">
+    <title>手播课</title>
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/css/customer.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <script src="../assets/js/jquery-3.0.0.min.js"></script>
+    <script src="../assets/js/jquery.extend.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/qrcode.js"></script>
+    <script src="../assets/js/customer/customerCommon.js"></script>
+    <script src="../assets/js/customer/customerPurchase.js"></script>
+</head>
+<body style="background-color: #f1f3f5;">
+<header class="clearfix">
+    <div class="container clearfix">
+        <div style="width: 15%;">
+            <img src="../assets/img/logo.png">
+        </div>
+        <div class="header_1">
+            <h4>经销商中心</h4>
+        </div>
+        <div class="customer_loginBox">
+            <a style="color: #fff" href="../index.html">手播课官网入口</a>
+            <img id="customer_headPic" src="../assets/img/user_origin.png" alt="" />
+            <a id="customer_logout" href="#">[&nbsp;退出&nbsp;]</a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="customerCenter_content_wrapper">
+        <div class="header clearfix">
+            <h4><a href="customerCenter.html">个人中心首页</a> ></h4>
+            <h4 style="margin-left: 0px;"><a href="javascript:;">卡券购买</a></h4>
+            <span><img src="../assets/img/phone.png" style="width: 20px;">&nbsp;客服热线: &nbsp;028-6115-2581</span>
+        </div>
+        <div class="customerBuy_content">
+            <div style="padding-left: 40px">
+                <p style="font-size: 16px">请选择卡券金额及购买数量:</p>
+                <ul class="clearfix" id="feeUl">
+                    <li>
+                        <div class="card_info">
+                            <div class="card_item choose">
+                                <p id="fee_50" class="fee">￥50</p>
+                                <p class="deadline">有效期&nbsp;:&nbsp;永久</p>
+                            </div>
+                            <div class="chooseNum">
+                                <p>
+                                    <button class="minus">-</button><input money="50" type="text" class="quantity" value="0" /><button class="plus">+</button>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card_info">
+                            <div class="card_item choose">
+                                <p id="fee_100" class="fee">￥100</p>
+                                <p class="deadline">有效期&nbsp;:&nbsp;永久</p>
+                            </div>
+                            <div class="chooseNum">
+                                <p>
+                                    <button class="minus">-</button><input money="100" type="text" class="quantity" value="0" /><button class="plus">+</button>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card_info">
+                            <div class="card_item choose">
+                                <p id="fee_200" class="fee">￥200</p>
+                                <p class="deadline">有效期&nbsp;:&nbsp;永久</p>
+                            </div>
+                            <div class="chooseNum">
+                                <p>
+                                    <button class="minus">-</button><input money="200" type="text" class="quantity" value="0" /><button class="plus">+</button>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card_info">
+                            <div class="card_item choose">
+                                <p id="fee_400" class="fee">￥400</p>
+                                <p class="deadline">有效期&nbsp;:&nbsp;永久</p>
+                            </div>
+                            <div class="chooseNum">
+                                <p>
+                                    <button class="minus">-</button><input money="400" type="text" class="quantity" value="0" /><button class="plus">+</button>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card_info">
+                            <div class="card_item choose">
+                                <p id="fee_60" class="fee">￥600</p>
+                                <p class="deadline">有效期&nbsp;:&nbsp;永久</p>
+                            </div>
+                            <div class="chooseNum">
+                                <p>
+                                    <button class="minus">-</button><input money="600" type="text" class="quantity" value="0" /><button class="plus">+</button>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card_info">
+                            <div class="card_item choose">
+                                <p id="fee_800" class="fee">￥800</p>
+                                <p class="deadline">有效期&nbsp;:&nbsp;永久</p>
+                            </div>
+                            <div class="chooseNum">
+                                <p>
+                                    <button class="minus">-</button><input money="800" type="text" class="quantity" value="0" /><button class="plus">+</button>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="charge_item_1">
+                <p>请选择充值方式:</p>
+                <div class="charge_way">
+                    <ul style="margin-top: 0;" id="chargeWay" class="clearfix">
+                        <li class="active" id="zhiFuBao"><img src="../assets/img/img_zhifubao.png" alt="" /></li>
+                        <li id="weChat"><img src="../assets/img/img_weixin.png" alt="" /></li>
+                        <li id="bankTrans"><img src="../assets/img/img_bank.png" alt=""></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="charge_item_1">
+                <p class="customer_cardFee clearfix">卡券总额:
+                    <span style="float: right">
+                        <span id="totalFee">0.00</span>元
+                    </span>
+                </p>
+                <p class="customer_cardFee clearfix">折扣<span id="discount" style="width: 48px;height: 22px;line-height: 22px"></span>:
+                    <span style="float: right">
+                        -&nbsp;<span id="charge_minus">0.00</span>元
+                    </span>
+                </p>
+                <p class="customer_cardFee clearfix">实付金额:
+                    <span style="float: right">
+                        <span id="charge_value">0.00</span>元
+                    </span>
+                </p>
+                <div id="needBill">
+                    <label>是否索要发票:</label>&nbsp;&nbsp;
+                    <label><input id="yes" name="need" type="radio" value="1" />&nbsp;是&nbsp;</label>
+                    <label><input name="need" type="radio" checked value="0" />&nbsp;否&nbsp;</label>
+                </div>
+                <div id="pay_btn">前往支付</div>
+            </div>
+        </div>
+    </div>
+    <div id="pay_aliPay_div" class="list_hot">
+        <div class="pay_zhiFuBao">
+            <div class="pay_zhiFuBao_son">
+                <p>正在使用支付宝进行支付</p>
+            </div>
+            <div class="pay_zhiFuBao_son_2">
+                <div>
+                    <img src="../assets/img/img_pay_zhifubao.png" alt="支付宝扫码支付" />
+                </div>
+                <div>
+                    <img src="../assets/img/img_right.png" alt="right" />
+                </div>
+                <div>
+                    <p class="p1">支付金额: <span id="payCount_aliPay"></span>元</p>
+                    <p class="p2">请在5分钟内完成支付。</p>
+                    <div class="aliPay_box">
+                        <div id="aliPay"></div>
+                    </div>
+                    <p class="p3">请使用支付宝扫描二维码进行支付</p>
+                </div>
+                <div>
+                    <a id="back_aliPay" href="javascript:;">返回修改支付信息</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pay_weChat_div" class="list_hot">
+        <div class="pay_zhiFuBao">
+            <div class="pay_zhiFuBao_son">
+                <p>正在使用微信进行支付</p>
+            </div>
+            <div class="pay_zhiFuBao_son_2">
+                <div>
+                    <img src="../assets/img/img_pay_weixin.png" alt="微信扫码支付" />
+                </div>
+                <div>
+                    <img src="../assets/img/img_right.png" alt="right" />
+                </div>
+                <div>
+                    <p class="p1">支付金额: <span id="payCount_weChat"></span>元</p>
+                    <p class="p2">为确保安全,请尽快完成支付。</p>
+                    <div class="aliPay_box">
+                        <div id="weChatPay"></div>
+                    </div>
+                    <p class="p3">请使用微信扫描二维码进行支付</p>
+                </div>
+                <div>
+                    <a id="back_weChat" href="javascript:;">返回修改支付信息</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="clearfix">
+    <div>
+        <ul class="clearfix">
+            <li><a href="#">隐私政策</a></li>
+            <li><a href="#">服务条款</a></li>
+            <li><a class="special" href="#">联系我们</a></li>
+        </ul>
+        <p>成都铼看科技有限公司</p>
+        <p>成都铼看科技有限公司版权所有&copy;2016蜀ICP备15008658号-2</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="bank_trans">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" style="font-weight: 400;">成都铼看科技有限公司对公账户</h4>
+            </div>
+            <div class="modal-body clearfix" style="border-top: 1px solid #e5e5e5">
+                <div style="float: left;margin-right: 20px;">
+                    <p>开户行:&nbsp;中国工商银行</p>
+                    <p>开户名:&nbsp;杜彬</p>
+                    <p>账&nbsp;号:&nbsp;9558 8888 6666 9999 520</p>
+                </div>
+                <div style="float: left">
+                    <p>开户行:&nbsp;中国建设银行</p>
+                    <p>开户名:&nbsp;杜彬</p>
+                    <p>账&nbsp;号:&nbsp;6227 8888 6666 9999 520</p>
+                </div><br><br><br>
+                <div style="color: #4992fc;margin-top: 41px;">说明:<span style="color: red;">订单已成功生成,可在"购买记录"查看详情。</span>专线人员将在2小时内确认银行到账情况并及时反馈。卡券订单将预留48小时的待支付状态,48小时后未确认银行到账情况将作废订单。</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="billModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">确认发票信息</h4>
+            </div>
+            <div class="modal-body" style="border-top: 1px solid #e5e5e5">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="billType" class="col-sm-2 control-label">发票类型:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="billType" disabled value="普通发票">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="billContent" class="col-sm-2 control-label">发票内容:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="billContent" disabled value="技术服务">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userName" class="col-sm-2 control-label">联系人:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="userName" placeholder="请输入联系人姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone" class="col-sm-2 control-label">联系电话:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" disabled id="telephone" placeholder="请输入联系电话">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company" class="col-sm-2 control-label">发票抬头:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="company" placeholder="请输入发票抬头">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="col-sm-2 control-label">邮寄地址:</label>
+                        <div class="col-sm-10">
+                            <textarea id="address" class="form-control" rows="3" placeholder="请输入邮寄地址"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="save" class="btn btn-primary">保存修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</body>
+</html>
