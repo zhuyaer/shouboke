@@ -16,9 +16,9 @@
 
 ### 使用技术
 
-页面效果：HTML + CSS + JS +JQUERY + Bootstrap + Datatable
-直播播放：Flowplayer
-在线聊天：Socket.io（websokcetku）
-文件上传：WebUploader
-微信登录：QRcode.js
+1. 页面效果：HTML + CSS + JS +JQUERY + Bootstrap + Datatable
+2. 直播播放：Flowplayer
+3. 在线聊天：Socket.io（websokcetku）
+4. 文件上传：WebUploader
+5. 微信登录：QRcode.js
 
